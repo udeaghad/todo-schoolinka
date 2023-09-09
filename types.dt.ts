@@ -24,3 +24,10 @@ export interface ViewTaskProps {
   task: Todo;
   viewRef: React.RefObject<HTMLDivElement>;
 }
+
+export interface ButtonProps {
+  title: string | JSX.Element;
+  bgColor: string;
+  hoverColor: string;
+  handleClick: () => void;
+}

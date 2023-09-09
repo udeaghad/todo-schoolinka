@@ -6,6 +6,7 @@ import DatePicker from "@/components/DatePicker/DatePicker";
 import { Todo, TodoState } from "@/types.dt";
 import reducer from "@/lib/reducer";
 import TodoItem from "@/components/TodoItem/TodoItem";
+import ViewTask from "@/components/ViewTask/ViewTask";
 
 export default function Home() {
 
@@ -86,6 +87,13 @@ export default function Home() {
         
 
       </section>
+
+      <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-24" ref={viewTaskRef}>
+        <ViewTask 
+          task={task}
+          viewRef={viewTaskRef}
+        />
+      </div>
       
     </main>
   )
