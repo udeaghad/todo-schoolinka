@@ -1,6 +1,8 @@
 "use client";
 
 import React, {useEffect, useReducer, useRef, useState} from "react";
+import { MdAdd } from "react-icons/md";
+
 import NavBar from "@/components/NavBar/NavBar";
 import DatePicker from "@/components/DatePicker/DatePicker";
 import { Todo, TodoState } from "@/types.dt";
@@ -54,6 +56,7 @@ export default function Home() {
   const editTaskRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
   const addTaskRef = useRef<HTMLDivElement>(null)
+  const clenderRef = useRef<HTMLDivElement>(null)
 
   const handleViewTaskModal = (id: string) => { 
     
@@ -109,8 +112,14 @@ export default function Home() {
   }
 
   const showAddTaskModal = () => { 
-    addTaskRef.current?.style.setProperty('bottom', '0')
-    addTaskRef.current?.classList.add('linear', 'duration-300')
+    if (window.innerWidth > 768) {
+      clenderRef.current?.style.setProperty('display', 'none')      
+      addTaskRef.current?.style.setProperty('right', '1%')
+      addTaskRef.current?.classList.add('linear', 'duration-300')
+    } else {       
+      addTaskRef.current?.style.setProperty('bottom', '0')
+      addTaskRef.current?.classList.add('linear', 'duration-300')
+    }
   }
 
   const handleCloseAddTaskModal = () => {
@@ -144,11 +153,20 @@ export default function Home() {
         <NavBar />
       </div>
 
-      <section className='px-3 pt-5 mt-16'>
+      <section className='px-3 pt-5 mt-16 md:flex md:justify-between md:items-start md:w-full md:px-5'>
         <div>
           <h2 className='text-xl font-bold'>Good morning!</h2>
           <p className='text-sm text-gray-500'>You got some task to do. </p>
-        </div>        
+        </div> 
+
+        <div className="hidden md:block">
+          <button className='border border-primary bg-primary rounded-md p-2 text-center text-sm text-white font-semibold hover:bg-secondary flex justify-center items-center gap-2' 
+            onClick={showAddTaskModal} 
+          >
+            <MdAdd className='text-white text-xl'/>
+            <span>Create New Task</span>
+          </button>
+        </div>      
       </section>
 
       <section className="mt-5">
