@@ -1,4 +1,5 @@
-import NavBar from "@/components/NavBar/NavBar"
+import NavBar from "@/components/NavBar/NavBar";
+import DatePicker from "@/components/DatePicker/DatePicker";
 
 export default function Home() {
   return (
@@ -12,6 +13,14 @@ export default function Home() {
           <h2 className='text-xl font-bold'>Good morning!</h2>
           <p className='text-sm text-gray-500'>You got some task to do. </p>
         </div>        
+      </section>
+
+      <section className="mt-5">
+        <div>
+          <DatePicker />
+        </div>
+        
+
       </section>
       
     </main>
