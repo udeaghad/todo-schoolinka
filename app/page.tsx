@@ -7,7 +7,7 @@ export default function Home() {
         <NavBar />
       </div>
 
-      <section className='px-3 pt-5 mt-16 md:flex md:justify-between md:items-start md:w-full md:px-5'>
+      <section className='px-3 pt-5 mt-16'>
         <div>
           <h2 className='text-xl font-bold'>Good morning!</h2>
           <p className='text-sm text-gray-500'>You got some task to do. </p>
