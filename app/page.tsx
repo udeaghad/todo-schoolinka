@@ -2,6 +2,7 @@
 
 import React, {useEffect, useReducer, useRef, useState} from "react";
 import { MdAdd } from "react-icons/md";
+import ReactPaginate from 'react-paginate';
 
 import NavBar from "@/components/NavBar/NavBar";
 import DatePicker from "@/components/DatePicker/DatePicker";
@@ -145,6 +146,23 @@ export default function Home() {
     setNewTask('')
   }
 
+  const [itemOffset, setItemOffset] = useState<number>(0);
+  const [currentItems, setCurrentItems] = useState<Todo[]>([])
+  const [pageCount, setPageCount] = useState<number>(0)
+  const itemsPerPage = 5;
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems( state.todos.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(state.todos.length / itemsPerPage));   
+
+  }, [itemOffset, state.todos])
+
+  const handlePageClick = (e: { selected: number; }) => {
+    const newOffset = (e.selected * itemsPerPage) % state.todos.length;    
+    setItemOffset(newOffset);
+  }
+
 
 
   return (
@@ -179,6 +197,34 @@ export default function Home() {
           {state.todos.map((todo: Todo) => (
             <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} handleViewTaskModal={handleViewTaskModal} />
           ))}
+        </div>
+
+        <div className="hidden md:block">
+          <div>
+            {currentItems.map((todo: Todo) => (
+              <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} handleViewTaskModal={handleViewTaskModal} />
+            ))}
+          </div>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="< Previous"
+            renderOnZeroPageCount={null}
+            containerClassName="flex justify-between items-center m-5 w-full"
+            pageClassName="cursor-pointer rounded-full w-8 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-secondary"
+            previousClassName="cursor-pointer rounded-md p-1 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-primary"
+            nextClassName="cursor-pointer rounded-md p-1 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-primary" 
+            activeClassName="text-white bg-primary w-8 h-8 rounded-full"
+            breakClassName="text-gray-500"
+            activeLinkClassName="text-white bg-primary w-full h-full flex justify-center items-center rounded-full"
+            pageLinkClassName="text-gray-500 text-sm hover:text-white"
+            previousLinkClassName="text-gray-500 text-sm hover:text-white"
+            nextLinkClassName="text-gray-500 text-sm hover:text-white"
+          />
+
         </div>
 
         <div className="fixed bottom-0 right-0 left-0 bg-white md:hidden">
