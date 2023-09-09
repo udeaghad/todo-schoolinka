@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useReducer} from "react";
+import React, {useEffect, useReducer, useRef, useState} from "react";
 import NavBar from "@/components/NavBar/NavBar";
 import DatePicker from "@/components/DatePicker/DatePicker";
 import { Todo, TodoState } from "@/types.dt";
@@ -13,6 +13,14 @@ export default function Home() {
     todos: [],
   }
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const [task, setTask] = useState<Todo>({
+    id: '',
+    title: '',
+    completed: false,
+    startTime: '',
+    endTime: '',
+  })
 
   useEffect(() => {
     const todoItems = async() => {
@@ -38,6 +46,20 @@ export default function Home() {
     dispatch({ type: 'UPDATE_STATUS', payload: id })   
   }
 
+  const viewTaskRef = useRef<HTMLDivElement>(null)
+  const datePickerRef = useRef<HTMLDivElement>(null)
+
+  const handleViewTaskModal = (id: string) => { 
+    
+      viewTaskRef.current?.style.setProperty('bottom', '0')
+      viewTaskRef.current?.classList.add('linear', 'duration-300')
+      datePickerRef.current?.style.setProperty('display', 'none')
+   
+         
+    const task = state.todos.find((todo: Todo) => todo.id === id)
+    setTask(task!)    
+  }
+
   return (
     <main>
       <div className="fixed top-0 w-full bg-white z-50">
@@ -58,7 +80,7 @@ export default function Home() {
 
         <div>
           {state.todos.map((todo: Todo) => (
-            <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} />
+            <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} handleViewTaskModal={handleViewTaskModal} />
           ))}
         </div>
         

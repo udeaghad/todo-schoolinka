@@ -17,4 +17,10 @@ export interface TodoAction {
 
 export interface TodoItemProps extends Todo {
   handleCheckBox: (id: string) => void;
+  handleViewTaskModal: (id: string) => void;
+}
+
+export interface ViewTaskProps {
+  task: Todo;
+  viewRef: React.RefObject<HTMLDivElement>;
 }
