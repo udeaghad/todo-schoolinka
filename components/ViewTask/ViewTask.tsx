@@ -17,7 +17,8 @@ const ViewTask = ({
   editTaskRef, 
   handleEditOnChange, 
   tempTask, 
-  handleSaveEditTask 
+  handleSaveEditTask,
+  handleCloseEditModal 
 }: ViewTaskProps) => {
 
   return (
@@ -60,7 +61,7 @@ const ViewTask = ({
             <span className='text-sm font-bold'>Edit Task</span>
           </div>
 
-          <div onClick={handleCloseViewModal}>
+          <div onClick={handleCloseEditModal}>
             <AiOutlineClose className='text-gray-700 text-base font-bold cursor-pointer' />
           </div>
         </div>
@@ -100,7 +101,7 @@ const ViewTask = ({
 
         <div className='flex justify-between items-center w-full mt-3'>
 
-          <Button title='Cancle' bgColor='white' handleClick={handleCloseViewModal} hoverColor='red' />
+          <Button title='Cancle' bgColor='white' handleClick={handleCloseEditModal} hoverColor='red' />
           <Button title='Save' bgColor='#0e31f2' handleClick={handleSaveEditTask} hoverColor='#3d58ed' />
 
         </div>

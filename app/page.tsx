@@ -125,6 +125,14 @@ export default function Home() {
     handleCloseViewModal()
   }
 
+  const handleCloseEditModal = () => {
+    handleCloseViewModal()
+
+    setTempTask(task)
+    viewRef.current?.style.setProperty('display', 'block')
+    editTaskRef.current?.style.setProperty('display', 'none')
+  }
+
   const showAddTaskModal = () => { 
     if (window.innerWidth > 768) {
       clenderRef.current?.style.setProperty('display', 'none')      
@@ -276,6 +284,7 @@ export default function Home() {
           handleEditOnChange={handleEditOnChange}
           tempTask={tempTask}
           handleSaveEditTask={handleSaveEditTask}
+          handleCloseEditModal={handleCloseEditModal}
           
         />
       </div>

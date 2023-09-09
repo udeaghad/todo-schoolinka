@@ -30,6 +30,7 @@ export interface ViewTaskProps {
   handleEditOnChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   tempTask: Todo;
   handleSaveEditTask: () => void;
+  handleCloseEditModal: () => void;
 }
 
 export interface ButtonProps {
