@@ -18,6 +18,14 @@ const reducer = (state: TodoState, action: TodoAction) => {
           return todo;
         })
       };
+
+      case 'DELETE_TASK':
+        return {
+          ...state,
+          todos: state.todos.filter((todo: Todo) => todo.id !== action.payload)
+        };
+
+        
     default:
       return state;
   }

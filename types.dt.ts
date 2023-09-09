@@ -23,6 +23,9 @@ export interface TodoItemProps extends Todo {
 export interface ViewTaskProps {
   task: Todo;
   viewRef: React.RefObject<HTMLDivElement>;
+  handleDeleteTask: (id: string) => void;
+  handleCloseViewModal: () => void;
+  handleEditButton: () => void;
 }
 
 export interface ButtonProps {

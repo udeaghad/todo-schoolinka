@@ -61,6 +61,25 @@ export default function Home() {
     setTask(task!)    
   }
 
+  const handleCloseViewModal = () => {
+      viewTaskRef.current?.style.setProperty('bottom', '-100%')
+      viewTaskRef.current?.classList.add('linear', 'duration-300')
+      datePickerRef.current?.style.setProperty('display', 'block')
+    
+  }
+  const handleDeleteTask = (id: string) => {
+    dispatch({ type: 'DELETE_TASK', payload: id })  
+      
+  }
+
+  const handleEditButton = () => {
+    
+  }
+
+
+
+
+
   return (
     <main>
       <div className="fixed top-0 w-full bg-white z-50">
@@ -92,6 +111,9 @@ export default function Home() {
         <ViewTask 
           task={task}
           viewRef={viewTaskRef}
+          handleDeleteTask={handleDeleteTask}
+          handleCloseViewModal={handleCloseViewModal}
+          handleEditButton={handleEditButton}
         />
       </div>
       
