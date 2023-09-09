@@ -1,9 +1,10 @@
 "use client";
 
-import React, {useEffect, useReducer, useRef, useState} from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import ReactPaginate from 'react-paginate';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import NavBar from "@/components/NavBar/NavBar";
 import DatePicker from "@/components/DatePicker/DatePicker";
@@ -30,10 +31,10 @@ export default function Home() {
   })
 
   useEffect(() => {
-    const todoItems = async() => {
+    const todoItems = async () => {
       const res = await fetch('https://jsonplaceholder.typicode.com/todos')
       const data = await res.json()
-      
+
       const result = data.map((item: Todo) => {
         return {
           id: item.id,
@@ -43,14 +44,14 @@ export default function Home() {
           endTime: '11:00 am',
         }
       })
-      
+
       dispatch({ type: 'GET_TODOS', payload: result })
     }
     todoItems()
   }, [])
 
-  const handleCheckBox = (id: string) => {   
-    dispatch({ type: 'UPDATE_STATUS', payload: id })   
+  const handleCheckBox = (id: string) => {
+    dispatch({ type: 'UPDATE_STATUS', payload: id })
   }
 
   const viewTaskRef = useRef<HTMLDivElement>(null)
@@ -60,46 +61,48 @@ export default function Home() {
   const addTaskRef = useRef<HTMLDivElement>(null)
   const clenderRef = useRef<HTMLDivElement>(null)
 
-  const handleViewTaskModal = (id: string) => { 
+  const handleViewTaskModal = (id: string) => {
     if (window.innerWidth > 768) {
-      clenderRef.current?.style.setProperty('display', 'none') 
+      clenderRef.current?.style.setProperty('display', 'none')
       viewTaskRef.current?.style.setProperty('right', '1%')
-      viewTaskRef.current?.classList.add('linear', 'duration-300') 
-        
+      viewTaskRef.current?.classList.add('linear', 'duration-300')
+
     } else {
       viewTaskRef.current?.style.setProperty('bottom', '0')
       viewTaskRef.current?.classList.add('linear', 'duration-300')
       datePickerRef.current?.style.setProperty('display', 'none')
     }
-         
+
     const task = state.todos.find((todo: Todo) => todo.id === id)
-    setTask(task!)    
+    setTask(task!)
   }
 
   const handleCloseViewModal = () => {
     if (window.innerWidth > 768) {
-      clenderRef.current?.style.setProperty('display', 'block') 
+      clenderRef.current?.style.setProperty('display', 'block')
       viewTaskRef.current?.style.setProperty('right', '-100%')
       viewTaskRef.current?.classList.add('linear', 'duration-300')
 
     } else {
-      
+
       viewTaskRef.current?.style.setProperty('bottom', '-100%')
       viewTaskRef.current?.classList.add('linear', 'duration-300')
       datePickerRef.current?.style.setProperty('display', 'block')
     }
+
+    viewRef.current?.style.setProperty('display', 'block')
+    editTaskRef.current?.style.setProperty('display', 'none')
   }
   const handleDeleteTask = (id: string) => {
-    dispatch({ type: 'DELETE_TASK', payload: id })  
-    handleCloseViewModal()  
+    dispatch({ type: 'DELETE_TASK', payload: id })
+    handleCloseViewModal()
   }
-  
+
   const handleEditButton = () => {
     viewRef.current?.style.setProperty('display', 'none')
     editTaskRef.current?.style.setProperty('display', 'block')
-    
-  }
 
+  }
 
   const [tempTask, setTempTask] = useState<Todo>({
     id: '',
@@ -121,24 +124,22 @@ export default function Home() {
   }
 
   const handleSaveEditTask = () => {
-    dispatch({ type: 'EDIT_TASK', payload: {title:tempTask.title, id: tempTask.id }})
+    dispatch({ type: 'EDIT_TASK', payload: { title: tempTask.title, id: tempTask.id } })
     handleCloseViewModal()
+
   }
 
   const handleCloseEditModal = () => {
     handleCloseViewModal()
-
     setTempTask(task)
-    viewRef.current?.style.setProperty('display', 'block')
-    editTaskRef.current?.style.setProperty('display', 'none')
   }
 
-  const showAddTaskModal = () => { 
+  const showAddTaskModal = () => {
     if (window.innerWidth > 768) {
-      clenderRef.current?.style.setProperty('display', 'none')      
+      clenderRef.current?.style.setProperty('display', 'none')
       addTaskRef.current?.style.setProperty('right', '1%')
       addTaskRef.current?.classList.add('linear', 'duration-300')
-    } else {       
+    } else {
       addTaskRef.current?.style.setProperty('bottom', '0')
       addTaskRef.current?.classList.add('linear', 'duration-300')
     }
@@ -146,7 +147,7 @@ export default function Home() {
 
   const handleCloseAddTaskModal = () => {
     if (window.innerWidth > 768) {
-      clenderRef.current?.style.setProperty('display', 'block')      
+      clenderRef.current?.style.setProperty('display', 'block')
       addTaskRef.current?.style.setProperty('right', '-100%')
       addTaskRef.current?.classList.add('linear', 'duration-300')
     } else {
@@ -169,7 +170,7 @@ export default function Home() {
       startTime: '10:00 am',
       endTime: '11:00 am',
     }
-    dispatch({ type: 'ADD_TASK', payload})
+    dispatch({ type: 'ADD_TASK', payload })
     setNewTask('')
   }
 
@@ -180,14 +181,14 @@ export default function Home() {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems( state.todos.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(state.todos.length / itemsPerPage));   
+    setCurrentItems(state.todos.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(state.todos.length / itemsPerPage));
 
   }, [itemOffset, state.todos])
 
-  
+
   const handlePageClick = (e: { selected: number; }) => {
-    const newOffset = (e.selected * itemsPerPage) % state.todos.length;    
+    const newOffset = (e.selected * itemsPerPage) % state.todos.length;
     setItemOffset(newOffset);
   }
 
@@ -203,16 +204,16 @@ export default function Home() {
         <div>
           <h2 className='text-xl font-bold'>Good morning!</h2>
           <p className='text-sm text-gray-500'>You got some task to do. </p>
-        </div> 
+        </div>
 
         <div className="hidden md:block">
-          <button className='border border-primary bg-primary rounded-md p-2 text-center text-sm text-white font-semibold hover:bg-secondary flex justify-center items-center gap-2' 
-            onClick={showAddTaskModal} 
+          <button className='border border-primary bg-primary rounded-md p-2 text-center text-sm text-white font-semibold hover:bg-secondary flex justify-center items-center gap-2'
+            onClick={showAddTaskModal}
           >
-            <MdAdd className='text-white text-xl'/>
+            <MdAdd className='text-white text-xl' />
             <span>Create New Task</span>
           </button>
-        </div>      
+        </div>
       </section>
 
       <section className="mt-5 md:flex md:justify-start md:items-start md:gap-[1%] md:w-full md:px-5">
@@ -244,7 +245,7 @@ export default function Home() {
               containerClassName="flex justify-between items-center m-5 w-full"
               pageClassName="cursor-pointer rounded-full w-8 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-secondary"
               previousClassName="cursor-pointer rounded-md p-1 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-primary"
-              nextClassName="cursor-pointer rounded-md p-1 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-primary" 
+              nextClassName="cursor-pointer rounded-md p-1 h-8 flex justify-center items-center text-gray-500 bg-sec-gray hover:bg-primary"
               activeClassName="text-white bg-primary w-8 h-8 rounded-full"
               breakClassName="text-gray-500"
               activeLinkClassName="text-white bg-primary w-full h-full flex justify-center items-center rounded-full"
@@ -262,7 +263,7 @@ export default function Home() {
 
         <div className="md:w-[25%]">
           <div className="hidden md:block" ref={clenderRef}>
-            <Calendar 
+            <Calendar
               defaultValue={new Date()}
               className="rounded-md shadow-md border-gray-100"
               tileClassName="rounded-full bg-sec-gray hover:bg-primary hover:text-white"
@@ -274,31 +275,31 @@ export default function Home() {
       </section>
 
       <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-24" ref={viewTaskRef}>
-        <ViewTask 
+        <ViewTask
           task={task}
           viewRef={viewRef}
           handleDeleteTask={handleDeleteTask}
           handleCloseViewModal={handleCloseViewModal}
           handleEditButton={handleEditButton}
-          editTaskRef={editTaskRef}          
+          editTaskRef={editTaskRef}
           handleEditOnChange={handleEditOnChange}
           tempTask={tempTask}
           handleSaveEditTask={handleSaveEditTask}
           handleCloseEditModal={handleCloseEditModal}
-          
+
         />
       </div>
 
       <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-48" ref={addTaskRef}>
-        <AddTask 
+        <AddTask
           handleCloseAddTaskModal={handleCloseAddTaskModal}
           handleNewTaskOnChange={handleNewTaskOnChange}
           handleAddTask={handleAddTask}
           newTask={newTask}
-          
+
         />
       </div>
-      
+
     </main>
   )
 }
