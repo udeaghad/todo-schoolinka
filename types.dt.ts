@@ -39,3 +39,14 @@ export interface ButtonProps {
   hoverColor: string;
   handleClick: () => void;
 }
+
+export interface AddTaskProps {
+  handleCloseAddTaskModal: () => void;
+  handleNewTaskOnChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleAddTask: () => void;
+  newTask: string;  
+}
+
+export interface InputTaskBtnProps { 
+  showAddTaskModal: () => void;
+}

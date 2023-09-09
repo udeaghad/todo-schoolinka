@@ -36,6 +36,12 @@ const reducer = (state: TodoState, action: TodoAction) => {
         })
       }
 
+    case 'ADD_TASK':
+      return {
+        ...state,
+        todos: [action.payload, ...state.todos]
+      };
+
         
     default:
       return state;

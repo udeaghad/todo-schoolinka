@@ -7,6 +7,8 @@ import { Todo, TodoState } from "@/types.dt";
 import reducer from "@/lib/reducer";
 import TodoItem from "@/components/TodoItem/TodoItem";
 import ViewTask from "@/components/ViewTask/ViewTask";
+import AddTask from "@/components/AddTask/AddTask";
+import InputTaskBtn from "@/components/InputTaskBtn/InputTaskBtn";
 
 export default function Home() {
 
@@ -51,6 +53,7 @@ export default function Home() {
   const datePickerRef = useRef<HTMLDivElement>(null)
   const editTaskRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
+  const addTaskRef = useRef<HTMLDivElement>(null)
 
   const handleViewTaskModal = (id: string) => { 
     
@@ -110,9 +113,33 @@ export default function Home() {
     handleCloseEditModal()
   }
 
-  
+  const showAddTaskModal = () => { 
+    addTaskRef.current?.style.setProperty('bottom', '0')
+    addTaskRef.current?.classList.add('linear', 'duration-300')
+  }
 
+  const handleCloseAddTaskModal = () => {
+      addTaskRef.current?.style.setProperty('bottom', '-100%')
+      addTaskRef.current?.classList.add('linear', 'duration-300')
+  }
 
+  const [newTask, setNewTask] = useState<string>('')
+
+  const handleNewTaskOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewTask(e.target.value)
+  }
+
+  const handleAddTask = () => {
+    const payload = {
+      id: state.todos.length + 1,
+      title: newTask,
+      completed: false,
+      startTime: '10:00 am',
+      endTime: '11:00 am',
+    }
+    dispatch({ type: 'ADD_TASK', payload})
+    setNewTask('')
+  }
 
 
 
@@ -139,6 +166,10 @@ export default function Home() {
             <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} handleViewTaskModal={handleViewTaskModal} />
           ))}
         </div>
+
+        <div className="fixed bottom-0 right-0 left-0 bg-white">
+          <InputTaskBtn showAddTaskModal={showAddTaskModal} />
+        </div>
         
 
       </section>
@@ -155,6 +186,16 @@ export default function Home() {
           handleEditOnChange={handleEditOnChange}
           tempTask={tempTask}
           handleSaveEditTask={handleSaveEditTask}
+          
+        />
+      </div>
+
+      <div className="fixed -bottom-full w-full bg-white" ref={addTaskRef}>
+        <AddTask 
+          handleCloseAddTaskModal={handleCloseAddTaskModal}
+          handleNewTaskOnChange={handleNewTaskOnChange}
+          handleAddTask={handleAddTask}
+          newTask={newTask}
           
         />
       </div>
