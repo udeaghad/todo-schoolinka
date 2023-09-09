@@ -169,20 +169,30 @@ export default function Home() {
         </div>      
       </section>
 
-      <section className="mt-5">
-        <div>
+      <section className="mt-5 md:flex md:justify-start md:items-start md:gap-[1%] md:w-full md:px-5">
+      <div className="md:w-[70%]">
+        <div ref={datePickerRef}>
           <DatePicker />
         </div>
 
-        <div>
+        <div className="md:hidden">
           {state.todos.map((todo: Todo) => (
             <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} handleViewTaskModal={handleViewTaskModal} />
           ))}
         </div>
 
-        <div className="fixed bottom-0 right-0 left-0 bg-white">
+        <div className="fixed bottom-0 right-0 left-0 bg-white md:hidden">
           <InputTaskBtn showAddTaskModal={showAddTaskModal} />
         </div>
+      </div>
+
+      <div className="md:w-[25%]">
+
+      </div>
+
+        
+
+        
         
 
       </section>
