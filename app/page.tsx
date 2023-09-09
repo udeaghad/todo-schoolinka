@@ -77,10 +77,17 @@ export default function Home() {
   }
 
   const handleCloseViewModal = () => {
+    if (window.innerWidth > 768) {
+      clenderRef.current?.style.setProperty('display', 'block') 
+      viewTaskRef.current?.style.setProperty('right', '-100%')
+      viewTaskRef.current?.classList.add('linear', 'duration-300')
+
+    } else {
+      
       viewTaskRef.current?.style.setProperty('bottom', '-100%')
       viewTaskRef.current?.classList.add('linear', 'duration-300')
       datePickerRef.current?.style.setProperty('display', 'block')
-    
+    }
   }
   const handleDeleteTask = (id: string) => {
     dispatch({ type: 'DELETE_TASK', payload: id })  
@@ -252,7 +259,7 @@ export default function Home() {
 
       </section>
 
-      <div className="fixed -bottom-full w-full bg-white" ref={viewTaskRef}>
+      <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-24" ref={viewTaskRef}>
         <ViewTask 
           task={task}
           viewRef={viewRef}
