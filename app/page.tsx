@@ -73,18 +73,18 @@ export default function Home() {
     dispatch({ type: 'DELETE_TASK', payload: id })  
     handleCloseViewModal()  
   }
-
+  
+  const handleEditButton = () => {
+    viewRef.current?.style.setProperty('display', 'none')
+    editTaskRef.current?.style.setProperty('display', 'block')
+    
+  }
   const handleCloseEditModal = () => {
     viewTaskRef.current?.style.setProperty('bottom', '-100%')
     viewTaskRef.current?.classList.add('linear', 'duration-300')
     datePickerRef.current?.style.setProperty('display', 'block')
   }
 
-  const handleEditButton = () => {
-    viewRef.current?.style.setProperty('display', 'none')
-    editTaskRef.current?.style.setProperty('display', 'block')
-    
-  }
 
   const [tempTask, setTempTask] = useState<Todo>({
     id: '',

@@ -8,7 +8,7 @@ const reducer = (state: TodoState, action: TodoAction) => {
         todos: action.payload 
       };
 
-      case 'UPDATE_STATUS':        
+    case 'UPDATE_STATUS':        
       return {
         ...state,
         todos: state.todos.map((todo: Todo) => {
@@ -19,11 +19,22 @@ const reducer = (state: TodoState, action: TodoAction) => {
         })
       };
 
-      case 'DELETE_TASK':
-        return {
-          ...state,
-          todos: state.todos.filter((todo: Todo) => todo.id !== action.payload)
-        };
+    case 'DELETE_TASK':
+      return {
+        ...state,
+        todos: state.todos.filter((todo: Todo) => todo.id !== action.payload)
+      };
+
+    case 'EDIT_TASK':
+      return {
+        ...state,
+        todos: state.todos.map((todo: Todo) => {
+          if(todo.id === action.payload.id) {
+            todo.title = action.payload.title;
+          }
+          return todo;
+        })
+      }
 
         
     default:
