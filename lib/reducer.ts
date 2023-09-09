@@ -11,3 +11,5 @@ const reducer = (state: TodoState, action: TodoAction) => {
       return state;
   }
 }
+
+export default reducer;
