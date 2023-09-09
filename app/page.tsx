@@ -137,8 +137,14 @@ export default function Home() {
   }
 
   const handleCloseAddTaskModal = () => {
+    if (window.innerWidth > 768) {
+      clenderRef.current?.style.setProperty('display', 'block')      
+      addTaskRef.current?.style.setProperty('right', '-100%')
+      addTaskRef.current?.classList.add('linear', 'duration-300')
+    } else {
       addTaskRef.current?.style.setProperty('bottom', '-100%')
       addTaskRef.current?.classList.add('linear', 'duration-300')
+    }
   }
 
   const [newTask, setNewTask] = useState<string>('')
@@ -274,7 +280,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="fixed -bottom-full w-full bg-white" ref={addTaskRef}>
+      <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-48" ref={addTaskRef}>
         <AddTask 
           handleCloseAddTaskModal={handleCloseAddTaskModal}
           handleNewTaskOnChange={handleNewTaskOnChange}
