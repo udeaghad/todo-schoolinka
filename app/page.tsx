@@ -61,11 +61,16 @@ export default function Home() {
   const clenderRef = useRef<HTMLDivElement>(null)
 
   const handleViewTaskModal = (id: string) => { 
-    
+    if (window.innerWidth > 768) {
+      clenderRef.current?.style.setProperty('display', 'none') 
+      viewTaskRef.current?.style.setProperty('right', '1%')
+      viewTaskRef.current?.classList.add('linear', 'duration-300') 
+        
+    } else {
       viewTaskRef.current?.style.setProperty('bottom', '0')
       viewTaskRef.current?.classList.add('linear', 'duration-300')
       datePickerRef.current?.style.setProperty('display', 'none')
-   
+    }
          
     const task = state.todos.find((todo: Todo) => todo.id === id)
     setTask(task!)    
@@ -159,6 +164,7 @@ export default function Home() {
 
   }, [itemOffset, state.todos])
 
+  
   const handlePageClick = (e: { selected: number; }) => {
     const newOffset = (e.selected * itemsPerPage) % state.todos.length;    
     setItemOffset(newOffset);
@@ -233,21 +239,16 @@ export default function Home() {
           </div>
         </div>
 
-      <div className="md:w-[25%]">
-        <div className="hidden md:block" ref={clenderRef}>
-          <Calendar 
-            defaultValue={new Date()}
-            className="rounded-md shadow-md border-gray-100"
-            tileClassName="rounded-full bg-sec-gray hover:bg-primary hover:text-white"
-          />
+        <div className="md:w-[25%]">
+          <div className="hidden md:block" ref={clenderRef}>
+            <Calendar 
+              defaultValue={new Date()}
+              className="rounded-md shadow-md border-gray-100"
+              tileClassName="rounded-full bg-sec-gray hover:bg-primary hover:text-white"
+            />
+          </div>
+
         </div>
-
-      </div>
-
-        
-
-        
-        
 
       </section>
 
