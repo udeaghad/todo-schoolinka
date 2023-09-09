@@ -82,11 +82,6 @@ export default function Home() {
     editTaskRef.current?.style.setProperty('display', 'block')
     
   }
-  const handleCloseEditModal = () => {
-    viewTaskRef.current?.style.setProperty('bottom', '-100%')
-    viewTaskRef.current?.classList.add('linear', 'duration-300')
-    datePickerRef.current?.style.setProperty('display', 'block')
-  }
 
 
   const [tempTask, setTempTask] = useState<Todo>({
@@ -110,7 +105,7 @@ export default function Home() {
 
   const handleSaveEditTask = () => {
     dispatch({ type: 'EDIT_TASK', payload: {title:tempTask.title, id: tempTask.id }})
-    handleCloseEditModal()
+    handleCloseViewModal()
   }
 
   const showAddTaskModal = () => { 
@@ -181,8 +176,7 @@ export default function Home() {
           handleDeleteTask={handleDeleteTask}
           handleCloseViewModal={handleCloseViewModal}
           handleEditButton={handleEditButton}
-          editTaskRef={editTaskRef}
-          handleCloseEditModal={handleCloseEditModal}
+          editTaskRef={editTaskRef}          
           handleEditOnChange={handleEditOnChange}
           tempTask={tempTask}
           handleSaveEditTask={handleSaveEditTask}

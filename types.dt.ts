@@ -27,7 +27,6 @@ export interface ViewTaskProps {
   handleCloseViewModal: () => void;
   handleEditButton: () => void;
   editTaskRef: React.RefObject<HTMLDivElement>;
-  handleCloseEditModal: () => void;
   handleEditOnChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   tempTask: Todo;
   handleSaveEditTask: () => void;
