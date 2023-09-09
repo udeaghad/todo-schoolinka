@@ -49,6 +49,8 @@ export default function Home() {
 
   const viewTaskRef = useRef<HTMLDivElement>(null)
   const datePickerRef = useRef<HTMLDivElement>(null)
+  const editTaskRef = useRef<HTMLDivElement>(null)
+  const viewRef = useRef<HTMLDivElement>(null)
 
   const handleViewTaskModal = (id: string) => { 
     
@@ -69,12 +71,46 @@ export default function Home() {
   }
   const handleDeleteTask = (id: string) => {
     dispatch({ type: 'DELETE_TASK', payload: id })  
-      
+    handleCloseViewModal()  
+  }
+
+  const handleCloseEditModal = () => {
+    viewTaskRef.current?.style.setProperty('bottom', '-100%')
+    viewTaskRef.current?.classList.add('linear', 'duration-300')
+    datePickerRef.current?.style.setProperty('display', 'block')
   }
 
   const handleEditButton = () => {
+    viewRef.current?.style.setProperty('display', 'none')
+    editTaskRef.current?.style.setProperty('display', 'block')
     
   }
+
+  const [tempTask, setTempTask] = useState<Todo>({
+    id: '',
+    title: '',
+    completed: false,
+    startTime: '',
+    endTime: '',
+  })
+
+  useEffect(() => {
+    setTempTask(task)
+  }, [task])
+
+  const handleEditOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTempTask({
+      ...tempTask,
+      title: e.target.value
+    })
+  }
+
+  const handleSaveEditTask = () => {
+    dispatch({ type: 'EDIT_TASK', payload: {title:tempTask.title, id: tempTask.id }})
+    handleCloseEditModal()
+  }
+
+  
 
 
 
@@ -107,13 +143,19 @@ export default function Home() {
 
       </section>
 
-      <div className="fixed -bottom-full w-full bg-white md:-right-full md:w-[28%] md:bottom-24" ref={viewTaskRef}>
+      <div className="fixed -bottom-full w-full bg-white" ref={viewTaskRef}>
         <ViewTask 
           task={task}
-          viewRef={viewTaskRef}
+          viewRef={viewRef}
           handleDeleteTask={handleDeleteTask}
           handleCloseViewModal={handleCloseViewModal}
           handleEditButton={handleEditButton}
+          editTaskRef={editTaskRef}
+          handleCloseEditModal={handleCloseEditModal}
+          handleEditOnChange={handleEditOnChange}
+          tempTask={tempTask}
+          handleSaveEditTask={handleSaveEditTask}
+          
         />
       </div>
       

@@ -26,6 +26,11 @@ export interface ViewTaskProps {
   handleDeleteTask: (id: string) => void;
   handleCloseViewModal: () => void;
   handleEditButton: () => void;
+  editTaskRef: React.RefObject<HTMLDivElement>;
+  handleCloseEditModal: () => void;
+  handleEditOnChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  tempTask: Todo;
+  handleSaveEditTask: () => void;
 }
 
 export interface ButtonProps {
