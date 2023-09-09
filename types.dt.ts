@@ -16,5 +16,5 @@ export interface TodoAction {
 }
 
 export interface TodoItemProps extends Todo {
-  
+  handleCheckBox: (id: string) => void;
 }

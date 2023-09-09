@@ -58,7 +58,7 @@ export default function Home() {
 
         <div>
           {state.todos.map((todo: Todo) => (
-            <TodoItem key={todo.id} {...todo} />
+            <TodoItem key={todo.id} {...todo} handleCheckBox={handleCheckBox} />
           ))}
         </div>
         
