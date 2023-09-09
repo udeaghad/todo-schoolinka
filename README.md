@@ -24,8 +24,7 @@ To get a local copy up and running follow these simple steps.
 
 # Built With 🛠️
 - Programming Languages: TypeScript, JavaScript, HTML, CSS.
-- Frameworks: React, Redux, TailwindCSS.
-- External APIs: Google Map API, Innoloft API.
+- Frameworks: Next, TailwindCSS.
 - GitHub Linters.
 - Code Editor: VS Code.
 
