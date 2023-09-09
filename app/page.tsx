@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar/NavBar";
 import DatePicker from "@/components/DatePicker/DatePicker";
 import { Todo, TodoState } from "@/types.dt";
 import reducer from "@/lib/reducer";
+import TodoItem from "@/components/TodoItem/TodoItem";
 
 export default function Home() {
 
@@ -33,6 +34,10 @@ export default function Home() {
     todoItems()
   }, [])
 
+  const handleCheckBox = (id: string) => {   
+    dispatch({ type: 'UPDATE_STATUS', payload: id })   
+  }
+
   return (
     <main>
       <div className="fixed top-0 w-full bg-white z-50">
@@ -49,6 +54,12 @@ export default function Home() {
       <section className="mt-5">
         <div>
           <DatePicker />
+        </div>
+
+        <div>
+          {state.todos.map((todo: Todo) => (
+            <TodoItem key={todo.id} {...todo} />
+          ))}
         </div>
         
 

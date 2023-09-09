@@ -14,3 +14,7 @@ export interface TodoAction {
   type: string;
   payload: any;
 }
+
+export interface TodoItemProps extends Todo {
+  
+}
